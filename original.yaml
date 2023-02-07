@@ -1,0 +1,69 @@
+
+openapi: 3.0.1
+info:
+  title: User Service
+  version: 1.0.0
+paths:
+  /users:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+              type: object
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+                required:
+                  - id
+                type: object
+  /users/{userId}:
+    get:
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: The user
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    type: string
+                required:
+                  - name
+                type: object
+security:
+  - user_auth:
+    - write:users
+    - read:pets
+  - customer_auth:
+    - write:customer
+    - read:customer
+servers:
+- url: https://staging.gigantic-server.com/v1
+  description: Staging server
+- url: https://api.gigantic-server.com/v1
+  description: Production server
+tags:
+  - name: users
+    description: User operations
+  - name: customer
+    description: Customer operations
+externalDocs:
+  description: Find more info here
+  url: https://vdcghvhe.com
